@@ -75,20 +75,23 @@
 </MudPaper>
 
 @code {
-    private List<DropdownItem> _items = new();
-    private DropdownItem? _selectedItem;
+    private List<DropDownItem> _items = new();
+    private DropDownItem? _selectedItem;
     private string _editorName = string.Empty;
     private string _dropdownLabel = "Select category";
 
     protected override async Task OnInitializedAsync()
     {
-        _items = await Db.DropdownItems.OrderBy(i => i.Name).ToListAsync();
+        _items = await Db.DropDownItem.OrderBy(i => i.Name).ToListAsync();
     }
 
     private async Task CreateItem()
     {
         if (string.IsNullOrWhiteSpace(_editorName))
             return;
+
+        if (_items.Any(x => x.Name.ToLower() == _editorName.Trim().ToLower()))
+            return; //This avoids duplicates and enforces quality.
 
         var entity = new DropdownItem { Name = _editorName.Trim() };
         Db.DropdownItems.Add(entity);
@@ -103,7 +106,7 @@
         if (_selectedItem is null || string.IsNullOrWhiteSpace(_editorName))
             return;
 
-        var entity = await Db.DropdownItems.FindAsync(_selectedItem.Id);
+        var entity = await Db.DropDownItem.FindAsync(_selectedItem.Id);
         if (entity is null)
             return;
 
@@ -118,11 +121,11 @@
         if (_selectedItem is null)
             return;
 
-        var entity = await Db.DropdownItems.FindAsync(_selectedItem.Id);
+        var entity = await Db.DropDownItem.FindAsync(_selectedItem.Id);
         if (entity is null)
             return;
 
-        Db.DropdownItems.Remove(entity);
+        Db.DropDownItem.Remove(entity);
         await Db.SaveChangesAsync();
 
         _selectedItem = null;
@@ -132,6 +135,6 @@
 
     private async Task Reload()
     {
-        _items = await Db.DropdownItems.OrderBy(i => i.Name).ToListAsync();
+        _items = await Db.DropDownItem.OrderBy(i => i.Name).ToListAsync();
     }
 }

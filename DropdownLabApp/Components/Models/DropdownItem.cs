@@ -1,6 +1,6 @@
 namespace DropdownLabApp.Models;
 
-public class DropDownItem
+public class DropdownItem
 {
     public int      Id      { get; set; }
     public string   Name    { get; set; } = string.Empty;
