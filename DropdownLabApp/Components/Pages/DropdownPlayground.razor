@@ -1,0 +1,136 @@
+@page "/dropdown-lab"
+@inject AppDbContext Db
+
+<PageTitle>Dropdown CRUD Lab</PageTitle>
+
+<MudPaper Class="p-4 m-4" Elevation="2">
+    <MudText Typo="Typo.h5">Dropdown CRUD Learning Environment</MudText>
+    <MudText Typo="Typo.caption">
+        Practice creating, updating, deleting dropdown items and renaming the label live.
+    </MudText>
+
+    <MudDivider Class="my-3" />
+
+    <MudGrid>
+        <!-- PREVIEW AREA -->
+        <MudItem xs="12" md="6">
+            <MudText Typo="Typo.subtitle1">Preview</MudText>
+
+            <!-- Editable dropdown label -->
+            <MudTextField @bind-Value="_dropdownLabel"
+                          Label="Dropdown Label"
+                          Class="mb-3" />
+
+            <!-- Dropdown -->
+            <MudSelect T="DropdownItem"
+                       Label="@_dropdownLabel"
+                       @bind-Value="_selectedItem"
+                       Dense="true"
+                       Class="mb-3">
+                @foreach (var item in _items)
+                {
+                    <MudSelectItem T="DropdownItem" Value="item">@item.Name</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudText Typo="Typo.caption">
+                Selected: @_selectedItem?.Name ?? "(none)"
+            </MudText>
+        </MudItem>
+
+        <!-- EDIT PANEL -->
+        <MudItem xs="12" md="6">
+            <MudText Typo="Typo.subtitle1">Edit Panel</MudText>
+
+            <MudTextField @bind-Value="_editorName"
+                          Label="Item name"
+                          Class="mb-3" />
+
+            <MudStack Row="true" Spacing="2">
+                <MudButton Variant="Variant.Filled" OnClick="CreateItem">
+                    Add
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Warning"
+                           Disabled="_selectedItem == null"
+                           OnClick="UpdateItem">
+                    Update
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Error"
+                           Disabled="_selectedItem == null"
+                           OnClick="DeleteItem">
+                    Delete
+                </MudButton>
+            </MudStack>
+
+            <MudText Typo="Typo.caption" Class="mt-2">
+                Tip: Select an item first to update or delete it.
+            </MudText>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
+@code {
+    private List<DropdownItem> _items = new();
+    private DropdownItem? _selectedItem;
+    private string _editorName = string.Empty;
+    private string _dropdownLabel = "Select category";
+
+    protected override async Task OnInitializedAsync()
+    {
+        _items = await Db.DropdownItems.OrderBy(i => i.Name).ToListAsync();
+    }
+
+    private async Task CreateItem()
+    {
+        if (string.IsNullOrWhiteSpace(_editorName))
+            return;
+
+        var entity = new DropdownItem { Name = _editorName.Trim() };
+        Db.DropdownItems.Add(entity);
+        await Db.SaveChangesAsync();
+
+        await Reload();
+        _editorName = string.Empty;
+    }
+
+    private async Task UpdateItem()
+    {
+        if (_selectedItem is null || string.IsNullOrWhiteSpace(_editorName))
+            return;
+
+        var entity = await Db.DropdownItems.FindAsync(_selectedItem.Id);
+        if (entity is null)
+            return;
+
+        entity.Name = _editorName.Trim();
+        await Db.SaveChangesAsync();
+
+        await Reload();
+    }
+
+    private async Task DeleteItem()
+    {
+        if (_selectedItem is null)
+            return;
+
+        var entity = await Db.DropdownItems.FindAsync(_selectedItem.Id);
+        if (entity is null)
+            return;
+
+        Db.DropdownItems.Remove(entity);
+        await Db.SaveChangesAsync();
+
+        _selectedItem = null;
+        _editorName = string.Empty;
+        await Reload();
+    }
+
+    private async Task Reload()
+    {
+        _items = await Db.DropdownItems.OrderBy(i => i.Name).ToListAsync();
+    }
+}

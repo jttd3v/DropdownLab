@@ -1,0 +1,7 @@
+C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.csproj.AssemblyReference.cache
+C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.AssemblyInfoInputs.cache
+C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.AssemblyInfo.cs
+C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.csproj.CoreCompileInputs.cache
+C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.MvcApplicationPartsAssemblyInfo.cache
