@@ -5,3 +5,4 @@ C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\Dropdow
 C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.AssemblyInfo.cs
 C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.csproj.CoreCompileInputs.cache
 C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\TRAINING CAPT TRANI\DropdownLab\DropdownLabApp\obj\Debug\net8.0\DropdownLabApp.sourcelink.json
